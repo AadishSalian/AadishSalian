@@ -125,19 +125,18 @@ I'm a full stack developer with a strong foundation across languages, frameworks
 
 <br/>
 
-## Trophy Case
+## Commit Graph
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/AadishSalian/AadishSalian/output/trophy.svg"/>
+<img src="https://raw.githubusercontent.com/AadishSalian/AadishSalian/output/commit-graph.svg"/>
 
 </div>
 
 <!--
-  The image above is self-hosted (generated daily by a GitHub Action in this repo,
-  see .github/workflows/profile-readme.yml) so it never depends on a third-party
-  server being up. Until the workflow runs once, this image will be blank/broken —
-  see the setup steps in that workflow file.
+  The image above is a heatmap of your commit history (like the green squares
+  on your profile), self-hosted the same way as the other widgets above.
+  See .github/workflows/profile-readme.yml.
 -->
 
 <br/>
@@ -166,63 +165,3 @@ I'm a full stack developer with a strong foundation across languages, frameworks
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F2027,50:203A43,100:2C5364&height=100&section=footer"/>
 
 </div>
-name: Update Profile Widgets
-
-# Regenerates your GitHub Stats, Top Languages, Streak, Activity Graph, and
-# Trophy images and commits them to the "output" branch of this repo.
-# Your README then loads them from raw.githubusercontent.com, which is
-# served directly by GitHub — so it never depends on a third-party
-# widget server being up.
-
-on:
-  schedule:
-    - cron: '0 3 * * *'   # once a day at 03:00 UTC
-  workflow_dispatch:        # lets you trigger it manually from the Actions tab
-
-permissions:
-  contents: write
-
-jobs:
-  update-widgets:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout output branch
-        uses: actions/checkout@v4
-        with:
-          ref: output
-          fetch-depth: 0
-        continue-on-error: true
-
-      - name: Create output branch if missing
-        run: |
-          if ! git ls-remote --exit-code --heads origin output > /dev/null; then
-            git checkout --orphan output
-            git rm -rf . || true
-          fi
-
-      - name: Fetch GitHub Stats card
-        run: |
-          curl -sL "https://github-readme-stats.vercel.app/api?username=AadishSalian&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=c9d1d9" -o stats.svg
-
-      - name: Fetch Top Languages card
-        run: |
-          curl -sL "https://github-readme-stats.vercel.app/api/top-langs/?username=AadishSalian&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=c9d1d9" -o top-langs.svg
-
-      - name: Fetch Streak Stats
-        run: |
-          curl -sL "https://streak-stats.demolab.com/?user=AadishSalian&theme=tokyonight&hide_border=true&background=0D1117&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF" -o streak.svg
-
-      - name: Fetch Activity Graph
-        run: |
-          curl -sL "https://github-readme-activity-graph.vercel.app/graph?username=AadishSalian&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=58A6FF&line=58A6FF&point=ffffff&area=true&area_color=58A6FF" -o activity-graph.svg
-
-      - name: Fetch Trophy Case
-        run: |
-          curl -sL "https://github-profile-trophy.vercel.app/?username=AadishSalian&theme=tokyonight&no-frame=true&margin-w=10&row=1&column=7" -o trophy.svg
-
-      - name: Commit and push if changed
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stats.svg top-langs.svg streak.svg activity-graph.svg trophy.svg
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update profile widgets" && git push origin output)
