@@ -37,11 +37,11 @@ jobs:
 
       - name: Fetch GitHub Stats card
         run: |
-          curl -sL "https://github-readme-stats.vercel.app/api?username=AadishSalian&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=c9d1d9" -o stats.svg
+          curl -sL "https://github-readme-stats-fast.vercel.app/api?username=AadishSalian&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=c9d1d9" -o stats.svg
 
       - name: Fetch Top Languages card
         run: |
-          curl -sL "https://github-readme-stats.vercel.app/api/top-langs/?username=AadishSalian&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=c9d1d9" -o top-langs.svg
+          curl -sL "https://github-readme-stats-fast.vercel.app/api/top-langs/?username=AadishSalian&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=c9d1d9" -o top-langs.svg
 
       - name: Fetch Streak Stats
         run: |
@@ -51,11 +51,16 @@ jobs:
         run: |
           curl -sL "https://github-readme-activity-graph.vercel.app/graph?username=AadishSalian&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=58A6FF&line=58A6FF&point=ffffff&area=true&area_color=58A6FF" -o activity-graph.svg
 
-      - name: Fetch Commit Graph
+      - name: Validate fetched files are real SVGs
         run: |
-          curl -sL "https://ghchart.rshah.org/58A6FF/AadishSalian" -o commit-graph.svg
+          for f in stats.svg top-langs.svg streak.svg activity-graph.svg; do
+            if ! grep -q "<svg" "$f"; then
+              echo "::warning::$f does not look like a valid SVG (source may be down) — keeping previous version instead"
+              git checkout -- "$f" 2>/dev/null || rm -f "$f"
+            fi
+          done
 
       - name: Commit and push if changed
         run: |
-          git add stats.svg top-langs.svg streak.svg activity-graph.svg commit-graph.svg
+          git add stats.svg top-langs.svg streak.svg activity-graph.svg
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update profile widgets" && git push origin output)
