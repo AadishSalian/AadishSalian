@@ -125,20 +125,6 @@ I'm a full stack developer with a strong foundation across languages, frameworks
 
 <br/>
 
-## Commit Graph
-
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/AadishSalian/AadishSalian/output/commit-graph.svg"/>
-
-</div>
-
-<!--
-  The image above is a heatmap of your commit history (like the green squares
-  on your profile), self-hosted the same way as the other widgets above.
-  See .github/workflows/profile-readme.yml.
--->
-
 <br/>
 
 ## Featured Projects
