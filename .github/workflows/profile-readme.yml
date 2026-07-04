@@ -18,18 +18,21 @@ jobs:
   update-widgets:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout output branch
+      - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: output
           fetch-depth: 0
-        continue-on-error: true
 
-      - name: Create output branch if missing
+      - name: Switch to output branch (create if missing)
         run: |
-          if ! git ls-remote --exit-code --heads origin output > /dev/null; then
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin output > /dev/null 2>&1; then
+            git fetch origin output
+            git checkout output
+          else
             git checkout --orphan output
-            git rm -rf . || true
+            git rm -rf . > /dev/null 2>&1 || true
           fi
 
       - name: Fetch GitHub Stats card
@@ -54,7 +57,5 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add stats.svg top-langs.svg streak.svg activity-graph.svg commit-graph.svg
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update profile widgets" && git push origin output)
