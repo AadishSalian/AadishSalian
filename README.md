@@ -115,11 +115,44 @@ I'm a full stack developer with a strong foundation across languages, frameworks
 
 <br/>
 
+## Contribution Activity
+
+<div align="center">
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=AadishSalian&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=58A6FF&line=58A6FF&point=ffffff&area=true&area_color=58A6FF"/>
+
+</div>
+
+<br/>
+
+## Trophy Case
+
+<div align="center">
+
+<img src="https://github-profile-trophy.vercel.app/?username=AadishSalian&theme=tokyonight&no-frame=true&margin-w=10&row=1&column=7"/>
+
+</div>
+
+<br/>
+
 ## Featured Projects
 
 > Pin your best repositories from your GitHub profile page (**Customize your pins**) — they'll appear here automatically as cards.
 
 <br/>
+
+<!--
+  OPTIONAL — Animated contribution snake (eats your contribution graph)
+  One-time setup, fully automated after that:
+  1. In this repo, add a GitHub Actions workflow using:
+     https://github.com/Platane/snk
+  2. It runs daily and generates an SVG on an "output" branch.
+  3. Once set up, uncomment the block below.
+
+  <div align="center">
+  <img src="https://raw.githubusercontent.com/AadishSalian/AadishSalian/output/github-contribution-grid-snake-dark.svg"/>
+  </div>
+-->
 
 <div align="center">
 
